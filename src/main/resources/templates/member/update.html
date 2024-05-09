@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/update.js}"></script>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+    <form id="frm" class="container" th:action="@{/update}" method="post">
+        <!--        post mapping 으로 dto 보내기-->
+        <h4> 회원 수정 </h4>
+
+        <table th:object="${dto}" class="table" border="1">
+<!--            dto를 model을 통해 dto라는 이름으로 받아오기-->
+
+            <tr>
+                <div class="mb3">
+                    <label class="form-label">이름</label>
+                    <input id="username" name="username" type="text" class="form-control" readonly th:field="*{name}">
+                </div>
+            </tr>
+
+
+            <tr>
+                <div class="mb3">
+                    <label class="form-label">전화번호</label>
+                    <input id="phone" name="phone" type="text" class="form-control" th:field="*{phone}">
+                </div>
+            </tr>
+
+
+            <tr>
+                <div class="mb3">
+                    <label class="form-label">차량 번호</label>
+                    <input id="number" name="number" type="text" class="form-control" th:field="*{carNumber}">
+                </div>
+            </tr>
+
+
+            <tr>
+                <div class="mb3">
+                    <label class="form-label">회원권 종류</label>
+                    <select class="form-control" id="carType" th:field="*{membershipType}" onclick="priceChange()">
+                        <option th:each="membership : ${membershipType}"
+                                th:value="${membership}" th:text="${membership.name()}" th:data-price="${membership.price}"
+                        ></option>
+                    </select>
+                </div>
+            </tr>
+
+
+            <tr>
+                <div>
+                    <label class="form-label">종료일</label>
+                    <input type="text" readonly th:field="*{membership_end}" class="form-control" id="date">
+                    <input type="hidden" readonly th:field="*{membership_start}">
+                    <input type="checkbox" id="extendBox" onclick="extend()"><label>한달 추가 결제</label>
+                    <!--
+                    th로 남은 기간에 한달을 추가로 더하기?
+                    버튼이 클릭 되었다는 것만을 보내줘서 js에서 계산?
+                    extend 함수 만들기 -> if 구문을 활용하여 구현-->
+                </div>
+            </tr>
+
+
+            <tr>
+                <div>
+                    <br>
+                    <label class="form-label">추가 요금</label>
+                    <input type="text" readonly class="form-control" id="price">
+                    <!--
+                    한달 추가할 때에만 가격을 표시해야함
+                    js에서 onclick을 사용하여 checkbox에 클릭이 되어 있을 경우 value가 생기도록 구현
+                    -->
+
+                    <input type="hidden" id="hiddenPrice" th:field="*{charge}">
+                    <!--
+                    누적 정액제 지불 가격
+                    _th:field로 설정 해 놓으면 dto를 통해서 가져오고,
+                    checkbox의 클릭을 감지해서 체크박스가 클릭 되어 있는 상황이라면 value의 가격에 정액제 가격을 더한다
+                    js로 구현
+                    -->
+                </div>
+            </tr>
+
+            <br>
+
+            <input type="button" value="수정" class="btn btn-primary" onclick="submitForm()">
+
+        </table>
+
+
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/signUp.js}"></script>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+    <form id="frm" class="container" th:action="@{/signUp}" method="post" th:object="${dto}">
+        <!--        post mapping 으로 dto 보내기-->
+
+        <h4> 회원 가입 </h4>
+
+        <div class="mb3">
+            <label class="form-label">이름</label>
+            <input id="username" name="username" type="text" class="form-control" th:field="*{name}">
+
+        </div>
+        <div class="mb3">
+            <label class="form-label">전화번호</label>
+            <input id="phone" name="phone" type="text" class="form-control" th:field="*{phone}">
+
+        </div>
+        <div class="mb3">
+            <label class="form-label">차량 번호</label>
+            <input id="number" name="number" type="text" class="form-control" th:field="*{carNumber}">
+
+        </div>
+        <div class="mb3">
+            <label class="form-label">회원권 종류</label>
+            <select class="form-control" id="carTypeSelect" onchange="updatePrice()" th:field="*{membershipType}">
+                <option value="" selected>회원권 종류를 선택하세요</option>
+                <option th:each="membership : ${membershipType}"
+                        th:value="${membership}" th:text="${membership.name()}" th:data-price="${membership.price}"
+                ></option>
+
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label">가격</label>
+            <input type="text" class="form-control" id="priceField" th:field="*{charge}" readonly>
+            <!--            js로 구현-->
+        </div>
+
+        <div>
+            <label class="form-label">종료 일자</label>
+            <input type="text" th:field="*{membership_end}" class="form-control" readonly>
+            <input type="hidden" th:field="*{membership_start}">
+        </div>
+        <!--
+         : local date time을 java에서 구현? or html에서 구현?
+           model에 현재 날짜를 가져와서 계산하는 방법도 존재함
+        -->
+
+        <br>
+        <input type="submit" value="회원가입" class="btn btn-primary">
+
+        <input type="button" value="다시 입력하기" class="btn btn-primary" onclick="resetForm()">
+        <!--        js 로 리셋 만들기-->
+    </form>
+</div>
+</body>
+</html>
