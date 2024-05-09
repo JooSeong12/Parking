@@ -1,14 +1,20 @@
 package com.example.parkingProject.entity;
 
-import com.example.parkingProject.constant.MemberShipType;
+import com.example.parkingProject.constant.MembershipType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
-public class membership {
+@Getter @Setter
+@AllArgsConstructor @NoArgsConstructor
+public class Membership {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int member_id;
+    private Long memberId;
     private String phone;
     private LocalDate membershipEnd;
     private LocalDate membershipStart;
@@ -16,5 +22,5 @@ public class membership {
     private String name;
     private String carNumber;
     @Enumerated(EnumType.STRING)
-    private MemberShipType membershipType;
+    private MembershipType membershipType;
 }

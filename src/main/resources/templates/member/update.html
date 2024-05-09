@@ -54,8 +54,9 @@
             <tr>
                 <div>
                     <label class="form-label">종료일</label>
-                    <input type="text" readonly th:field="*{membership_end}" class="form-control" id="date">
-                    <input type="hidden" readonly th:field="*{membership_start}">
+                    <input type="text" readonly th:field="*{membershipEnd}" class="form-control" id="date">
+                    <input type="hidden" readonly th:field="*{membershipStart}">
+                    <br>
                     <input type="checkbox" id="extendBox" onclick="extend()"><label>한달 추가 결제</label>
                     <!--
                     th로 남은 기간에 한달을 추가로 더하기?
@@ -76,6 +77,7 @@
                     -->
 
                     <input type="hidden" id="hiddenPrice" th:field="*{charge}">
+                    <input type="hidden"  th:field="*{id}">
                     <!--
                     누적 정액제 지불 가격
                     _th:field로 설정 해 놓으면 dto를 통해서 가져오고,

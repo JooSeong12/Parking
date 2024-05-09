@@ -12,6 +12,10 @@
     <h3>
         주차 관리 프로그램입니다
     </h3>
+    <form th:action="@{/updateMember}">
+        <input type="submit" value="수정">
+        <input type="hidden" th:value="1" name="id">
+    </form>
 </div>
 </body>
 </html>
