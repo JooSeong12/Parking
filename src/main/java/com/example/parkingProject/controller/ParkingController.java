@@ -2,7 +2,7 @@ package com.example.parkingProject.controller;
 
 import com.example.parkingProject.constant.MembershipType;
 import com.example.parkingProject.dto.MemberDto;
-import com.example.parkingProject.repository.service.MemberService;
+import com.example.parkingProject.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +29,7 @@ public class ParkingController {
     }
     @PostMapping("/updateMember")
     private String update(@ModelAttribute("dto") MemberDto dto){
-        memberService.save(dto);
+        memberService.update(dto);
         return "redirect:/";
     }
 
@@ -48,7 +48,7 @@ public class ParkingController {
 
     @PostMapping("/insertMember")
     private String signUp(@ModelAttribute("dto") MemberDto dto){
-        memberService.save(dto);
+        memberService.insert(dto);
         return "redirect:/";
     }
 
