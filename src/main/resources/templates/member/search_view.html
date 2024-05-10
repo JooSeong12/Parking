@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form th:action="@{/updateMember}" method="get">
+
+        <table class="table">
+            <tr>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>차 번호</th>
+                <th>멤버십 번호</th>
+                <th>멤버십 시작 시간</th>
+                <th>멤버십 종료 시간</th>
+                <th></th>
+            </tr>
+
+            <tr th:each="member : ${searchList}" th:object="${member}">
+                <td th:text="*{name}">이름</td>
+                <td th:text="*{phone}">전화번호</td>
+                <td th:text="*{carNumber}">차 번호</td>
+                <td th:text="*{memberId}">멤버십 번호/회원권 종류</td>
+                <td th:text="*{membershipStart}">입차 시간</td>
+                <td th:text="*{membershipEnd}">주차 시간</td>
+                <td>
+                    <input type="hidden" name="id" th:value="*{memberId}">
+                    <input type="submit" value="수정">
+                    <!--                여기에 회원 수정 링크-->
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${searchList.number} <= 0? 'disabled'">
+                <a class="page-link"
+                   th:href="@{?searchType={searchType}&keyword={keyword}(page=${searchList.number - 1},searchType=${searchType},keyword=${keyword})}">
+                    Previous
+                </a>
+            </li>
+            <th:block th:each="pageNumber : ${paginationBarNumbers}">
+                <li class="page-item"><a class="page-link"
+                                         th:href="@{?searchType={searchType}&keyword={keyword}(page=${pageNumber},searchType=${searchType},keyword=${keyword})}"
+                                         th:text="${pageNumber+1}">1</a></li>
+
+            </th:block>
+            <li class="page-item" th:classappend="${searchList.number + 1} == ${searchList.totalPages}? 'disabled'">
+                <a class="page-link"
+                   th:href="@{?searchType={searchType}&keyword={keyword}(page=${searchList.number + 1},searchType=${searchType},keyword=${keyword})}">
+                    Next
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <form th:action="@{search}" method="get" role="search">
+        <select name="searchType">
+            <option value="name">이름</option>
+            <option value="phone">전화번호</option>
+            <option value="carNumber">차 번호</option>
+        </select>
+        <!--        체크박스로 뭐 검색 할 건지, value 값은 그냥 각각 고정된 값으로 둠-->
+
+        <input type="text" name="keyword" id="search">
+        <button type="submit" id="searchBtn">검색</button>
+    </form>
+
+
+</div>
+</body>
+</html>
