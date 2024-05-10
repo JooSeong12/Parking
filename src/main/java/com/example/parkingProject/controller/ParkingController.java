@@ -30,7 +30,7 @@ public class ParkingController {
     public String parkingState(Model model,
                                @PageableDefault(page = 0, size = 2, sort = "stateId",
                                        direction = Sort.Direction.ASC) Pageable pageable){
-        parkingService.saveDto();
+        parkingService.currentPrice();
         Page<ParkingState> paging = parkingService.pagingList(pageable);
         int totalPage = paging.getTotalPages();
         List<Integer> barNumbers = parkingService.getPaginationBarNumbers(pageable.getPageNumber(), totalPage);
