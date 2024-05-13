@@ -195,7 +195,7 @@ public class ParkingController {
     @GetMapping("parking")
     public String parking(Model model){
         model.addAttribute("dto",new ParkingStateDto());
-        return "parking";
+        return "parking/parking";
     }
 
     @PostMapping("/parking")
