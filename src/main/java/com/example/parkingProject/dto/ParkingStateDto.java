@@ -18,11 +18,8 @@ public class ParkingStateDto {
     private LocalDateTime inTime; // 입차시간
     private Long currentPrice; // 현재까지 주차비(java에서 구현해야함)
 
-    public ParkingStateDto(Long stateId, String carNumber, LocalDateTime inTime) {
-    }
-
     public static ParkingStateDto fromEntity(ParkingState parkingState){
-        return new ParkingStateDto(parkingState.getStateId(), parkingState.getCarNumber(), parkingState.getInTime());
+        return new ParkingStateDto(parkingState.getStateId(), parkingState.getCarNumber(), parkingState.getInTime(), parkingState.getCurrentPrice());
     }
 
     public static ParkingState fromDto(ParkingStateDto parkingStateDto){

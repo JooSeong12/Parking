@@ -207,4 +207,13 @@ public class ParkingController {
         return "redirect:/";
     }
 
+    @GetMapping("/payment")
+    public String payment(@RequestParam("id")Long id, Model model){
+        ParkingStateDto dto = parkingService.findById(id);
+        model.addAttribute("state",dto);
+        boolean member = memberService.findByCarNumber(dto.getCarNumber());
+        model.addAttribute("member",member);
+        System.out.println(dto);
+        return "parking/payment";
+    }
 }

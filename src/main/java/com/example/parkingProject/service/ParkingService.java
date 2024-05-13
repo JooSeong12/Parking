@@ -91,4 +91,11 @@ public class ParkingService {
         Page<ParkingState> states = parkingStateRepository.findByCarNumberContains(keyword, pageable);
         return states;
     }
+
+    public ParkingStateDto findById(Long id) {
+        ParkingState state = parkingStateRepository.findById(id).orElse(null);
+        System.out.println(state);
+
+        return ParkingStateDto.fromEntity(state);
+    }
 }

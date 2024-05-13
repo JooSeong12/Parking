@@ -50,4 +50,12 @@ public class MemberService {
         Page<Membership> carNumberList = membershipRepository.findByCarNumberContains(keyword, pageable);
         return carNumberList;
     }
+
+    public boolean findByCarNumber(String carNumber) {
+        Membership membership = membershipRepository.findByCarNumber(carNumber);
+        if ( membership != null){
+            return true;
+        }
+        else return false;
+    }
 }
