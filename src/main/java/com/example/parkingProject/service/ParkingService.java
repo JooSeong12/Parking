@@ -15,6 +15,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 @Service
@@ -35,7 +37,17 @@ public class ParkingService {
         List<ParkingState> list = parkingStateRepository.findAll(); //우선 데이터베이스에서 리스트로 모든 값을 가져옴(현재 currentPrice는 null인 상태)
         for(int i = 0; i<list.size(); i++){
             if(list.get(i).getCurrentPrice() == null){ //currentPrice가 비어있을 때만 시작
-                currentPrice = (long) calculateParkingFee(list.get(i).getInTime(), LocalDateTime.now()); // 메서드를 통해 구한 현재주차비를 Long으로 변환해서 선언
+                String patter = "^0[1-9]"; //정규표현식으로 시작이01~09인경우를 찾아준다
+                String patter2 = "^1[0-9]+[0-9]"; //정규표현식으로 시작이100~199인경우를 찾아준다
+                Pattern pattern = Pattern.compile(patter); //패턴객체생성(정규표현식에서 필요)
+                Pattern pattern2 = Pattern.compile(patter2); //패턴객체생성2(정규표현식에서 필요)
+                    Matcher matcher = pattern.matcher(list.get(i).getCarNumber()); //매칭해주는 객체
+                    Matcher matcher1 = pattern2.matcher(list.get(i).getCarNumber()); // 매칭해주는 객체
+                    if(matcher.find() == true || matcher1.find() == true){ //시작이 01~09이거나 100~199인 경우를 가정
+                        currentPrice = (long) calculateParkingFee(list.get(i).getInTime(), LocalDateTime.now())/2; //if의 조건이 맞다면 경차이므로 절반가격
+                    } else {
+                        currentPrice = (long) calculateParkingFee(list.get(i).getInTime(), LocalDateTime.now()); // if의 조건이 맞지 않다면 원래의 가격
+                    }
                 Long current = currentPrice;
                 list.get(i).setCurrentPrice(current); // 구한 주차비를 가져온 list에 저장
                 parkingStateRepository.save(list.get(i)); // currentPrice까지 들어간 list를 통해 db로 저장
