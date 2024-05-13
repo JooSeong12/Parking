@@ -1,5 +1,6 @@
 package com.example.parkingProject;
 
+import com.example.parkingProject.entity.Membership;
 import com.example.parkingProject.entity.ParkingState;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,5 +11,9 @@ public class appConfig {
     @Bean
     public ParkingState parkingState() {
         return new ParkingState();
+    }
+    @Bean
+    public Membership membership() {
+        return new Membership();
     }
 }

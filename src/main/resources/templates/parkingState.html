@@ -20,7 +20,7 @@
             <td th:text="*{stateId}"></a></td>
             <td th:text="*{carNumber}"></td>
             <td th:text="*{inTime}"></td>
-            <td th:text="*{currentPrice}"></td>
+            <td th:text="*{currentPrice == 1 ? '회원' : currentPrice}"></td>  <!--currentPrice가 1이면 회원을 출력 그렇지 않으면 추차비를 출력-->
         </tr>
     </table>
     <div class="page">

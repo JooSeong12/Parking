@@ -23,5 +23,4 @@ public class ParkingState {
     private LocalDateTime inTime;
     @Column(name="current_price")
     private Long currentPrice;
-
 }

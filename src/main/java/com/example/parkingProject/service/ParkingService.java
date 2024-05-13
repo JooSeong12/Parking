@@ -1,7 +1,9 @@
 package com.example.parkingProject.service;
 
 import com.example.parkingProject.dto.ParkingStateDto;
+import com.example.parkingProject.entity.Membership;
 import com.example.parkingProject.entity.ParkingState;
+import com.example.parkingProject.repository.MembershipRepository;
 import com.example.parkingProject.repository.ParkingStateRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -26,10 +28,24 @@ public class ParkingService {
     EntityManager em;
     private final ParkingState parkingState;
     private final ParkingStateRepository parkingStateRepository;
+    private final Membership membership;
+    private final MembershipRepository membershipRepository;
 
-    public ParkingService(ParkingState parkingState, ParkingStateRepository parkingStateRepository) {
+    public ParkingService(ParkingState parkingState, ParkingStateRepository parkingStateRepository, Membership membership, MembershipRepository membershipRepository) {
         this.parkingState = parkingState;
         this.parkingStateRepository = parkingStateRepository;
+        this.membership = membership;
+        this.membershipRepository = membershipRepository;
+    }
+
+    public List<String> membershipCar(){ //회원인지 찾기위해 회원들의 차량번호를 리스트로 만듦
+        List<Membership> list = membershipRepository.findAll();
+        List<String> carList = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++){
+           String carNumber = list.get(i).getCarNumber();
+           carList.add(carNumber);
+        }
+        return carList;
     }
 
     public void currentPrice(){ //currentPrice를 계산해서 db에 저장해주는 메서드
@@ -48,6 +64,16 @@ public class ParkingService {
                     } else {
                         currentPrice = (long) calculateParkingFee(list.get(i).getInTime(), LocalDateTime.now()); // if의 조건이 맞지 않다면 원래의 가격
                     }
+                List<String > list2 = membershipCar(); //차량번호를 비교할 대조군 리스트
+                boolean hasCommonElement = false;
+                    String carNumber = list.get(i).getCarNumber(); //현재 주차중인 차량번호를 선언
+                    if (list2.contains(carNumber)) { //현재 주차중인 차량번호와 고객들의 차량번호를 대조해줌
+                        hasCommonElement = true; // 대조결과 있다면 true로 지정
+                    }
+
+                if (hasCommonElement == true) {
+                    currentPrice = 1L; //회원의 차량번호라면 현재 주차비를 1로 해준다(주차비 계산 시 1은 나올 수 없는 숫자이기때문에 1이 있다면 회원의 차량이고 해당 차량은 현재주차비에서 1대신 회원으로 출력)
+                }
                 Long current = currentPrice;
                 list.get(i).setCurrentPrice(current); // 구한 주차비를 가져온 list에 저장
                 parkingStateRepository.save(list.get(i)); // currentPrice까지 들어간 list를 통해 db로 저장
