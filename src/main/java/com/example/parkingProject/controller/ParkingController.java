@@ -55,6 +55,28 @@ public class ParkingController {
         return "parkingState";
     }
 
+    @GetMapping("parkingState/search")
+    public String parkingStateSearch(@RequestParam("keyword")String keyword,
+                                     @RequestParam("searchType")String type,
+                                     Model model,
+                                     @PageableDefault(page = 0, size = 10, sort = "stateId",
+                                             direction = Sort.Direction.DESC) Pageable pageable){
+        Page<ParkingState> searchList = null;
+        List<Integer> barNumbers = null;
+        if(type.equals("carNumber")){
+            searchList = parkingService.searchByCarNumber(pageable,keyword);
+            int totalPage = searchList.getTotalPages();
+            barNumbers = parkingService.getPaginationBarNumbers(pageable.getPageNumber(), totalPage);
+        }
+        model.addAttribute("paginationBarNumbers", barNumbers);
+        model.addAttribute("paging", searchList);
+        //서칭+페이징을 위해 받아온 키워드와 검색타입도 넘김
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("searchType", type);
+        return "parkingState";
+    }
+
+
     @Autowired
     MemberService memberService;
     @Autowired
