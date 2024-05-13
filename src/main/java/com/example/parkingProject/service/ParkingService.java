@@ -30,6 +30,8 @@ public class ParkingService {
         this.parkingStateRepository = parkingStateRepository;
     }
 
+
+
     public void currentPrice(){ //currentPrice를 계산해서 db에 저장해주는 메서드
         Long currentPrice = 0L;
         List<ParkingState> list = parkingStateRepository.findAll(); //우선 데이터베이스에서 리스트로 모든 값을 가져옴(현재 currentPrice는 null인 상태)
@@ -41,6 +43,11 @@ public class ParkingService {
                 parkingStateRepository.save(list.get(i)); // currentPrice까지 들어간 list를 통해 db로 저장
             }
         }
+    }
+
+    public void save(ParkingStateDto dto) {
+        ParkingState parkingState1 = ParkingStateDto.fromDto(dto);
+        em.persist(parkingState1);
     }
 
     public int calculateParkingFee(LocalDateTime entranceTime, LocalDateTime exitTime) { //주차비 구하는 메서드

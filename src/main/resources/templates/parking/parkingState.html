@@ -19,7 +19,7 @@
         <tr th:each="article : ${paging}" th:object="${article}">
             <td th:text="*{stateId}"></a></td>
             <td th:text="*{carNumber}"></td>
-            <td th:text="*{inTime}"></td>
+            <td th:text="${#temporals.format(article.inTime, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="*{currentPrice}"></td>
         </tr>
     </table>

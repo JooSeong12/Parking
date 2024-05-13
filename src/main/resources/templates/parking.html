@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/parking.js}"></script>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+    <form id="frm" class="container" th:action="@{/parking}" method="post" th:object="${dto}">
+        <!--        post mapping 으로 dto 보내기-->
+
+        <h4> 주차 등록 페이지 </h4>
+
+        <div class="mb3">
+            <label class="form-label">차량 번호</label>
+            <input id="number" name="number" type="text" class="form-control" th:field="*{carNumber}">
+        </div>
+
+        <div>
+            <label class="form-label">현재 시간</label>
+            <input type="text" class="form-control" id="current-time" readonly>
+        </div>
+
+        <div>
+            <p>
+                <br>
+                주차장에 오신것을 환영합니다
+                <br>
+                주차요금(10분) : 1,000원 (경차는 50% 할인이 있습니다)
+                <br>
+                주차장에는 정액제가 존재합니다
+                <br>
+                정액제 결제를 원하시는 고객님은
+                <br>
+                관리자에게 문의 혹은 <a th:href="@{/insertMember}">http://parking/insertMember</a>에서 가입해 주세요
+            </p>
+        </div>
+
+        <input type="button" value="주차시작" class="btn btn-primary" onclick="submitForm()">
+
+    </form>
+</div>
+</body>
+</html>

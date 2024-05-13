@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -35,11 +36,8 @@ public class ParkingController {
     @Autowired
     EntityManager em;
 
-    private final ParkingService parkingService;
-
-    public ParkingController(ParkingService parkingService) {
-        this.parkingService = parkingService;
-    }
+    @Autowired
+    ParkingService parkingService;
 
     @GetMapping("parkingState")
     public String parkingState(Model model,
@@ -52,7 +50,7 @@ public class ParkingController {
         model.addAttribute("paginationBarNumbers", barNumbers);
         model.addAttribute("paging", paging);
 
-        return "parkingState";
+        return "parking/parkingState";
     }
 
     @GetMapping("parkingState/search")
@@ -73,7 +71,7 @@ public class ParkingController {
         //서칭+페이징을 위해 받아온 키워드와 검색타입도 넘김
         model.addAttribute("keyword", keyword);
         model.addAttribute("searchType", type);
-        return "parkingState";
+        return "parking/parkingState";
     }
 
 
@@ -194,5 +192,19 @@ public class ParkingController {
         return "member/search_view";
     }
 
+    @GetMapping("parking")
+    public String parking(Model model){
+        model.addAttribute("dto",new ParkingStateDto());
+        return "parking";
+    }
+
+    @PostMapping("/parking")
+    public String parking(@ModelAttribute("dto") ParkingStateDto dto) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime truncatedTime = now.truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
+        dto.setInTime(truncatedTime);
+        parkingService.save(dto);
+        return "redirect:/";
+    }
 
 }
