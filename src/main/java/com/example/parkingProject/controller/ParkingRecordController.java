@@ -36,10 +36,14 @@ public class ParkingRecordController {
 
     @GetMapping("/parkingRecord/search")
     public String recordSearch(Model model,
-                               @RequestParam("year")String year,
-                               @RequestParam("month")String month,
-                               @RequestParam("day")String day){
-        List<ParkingRecordDto> paging = paginationService.searchRecord(year);
+                               @RequestParam(required = false, name = "year")int year,
+                               @RequestParam(required = false, name = "month")int month,
+                               @RequestParam(required = false, name = "day")int day,
+                               @PageableDefault(page = 0, size = 10, sort = "registerId", direction = Sort.Direction.ASC)Pageable pageable){
+        Page<ParkingRecord> paging = paginationService.searchRecord(year, month, day,pageable);
+        int totalPage = paging.getTotalPages();
+        List<Integer> barNumbers=paginationService.getPaginationBarNumbers(pageable.getPageNumber(),totalPage);
+        model.addAttribute("paginationBarNumbers", barNumbers);
         model.addAttribute("paging", paging);
         return "/member/parkingRecord";
     }
