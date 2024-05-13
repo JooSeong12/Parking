@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/paging.css}">
 </head>
 <body>
 <div layout:fragment="content" class="content">
@@ -64,8 +65,8 @@
         </nav>
 
     </div>
-    <div class="page">
 
+    <div class="page search">
         <form th:action="@{search}" method="get" role="search">
             <select name="searchType">
                 <option value="name">이름</option>

@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/paging.css}">
 </head>
 <body>
 <div class="content" layout:fragment="content">
-    <table border="1">
+    <table class="table">
         <tr>
             <th>주차번호</th>
             <th>차량번호</th>
@@ -22,22 +23,36 @@
             <td th:text="*{currentPrice}"></td>
         </tr>
     </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item" th:classappend="${paging.number} <= 0? 'disabled'">
-                <a class="page-link"
-                   th:href="@{/parkingState(page=${paging.number-1})}">
-                    Previous</a>
-            </li>
-            <th:block th:each="pageNumber : ${paginationBarNumbers}">
-                <li class="page-item"><a class="page-link" th:href="@{/parkingState(page=${pageNumber})}"
-                                         th:text="${pageNumber+1}">1</a></li>
-            </th:block>
-            <li class="page-item" th:classappend="${paging.number + 1} == ${paging.totalPages}? 'disabled'"><a class="page-link"
-                                                                                                               th:href="@{/parkingState(page=${paging.number+1})}">Next</a>
-            </li>
-        </ul>
-    </nav>
+    <div class="page">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${paging.number} <= 0? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/parkingState(page=${paging.number-1})}">
+                        Previous</a>
+                </li>
+                <th:block th:each="pageNumber : ${paginationBarNumbers}">
+                    <li class="page-item"><a class="page-link" th:href="@{/parkingState(page=${pageNumber})}"
+                                             th:text="${pageNumber+1}">1</a></li>
+                </th:block>
+                <li class="page-item" th:classappend="${paging.number + 1} == ${paging.totalPages}? 'disabled'"><a class="page-link"
+                                                                                                                   th:href="@{/parkingState(page=${paging.number+1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="page search">
+        <form th:action="@{viewMember/parkingState}" method="get" role="search">
+            <select name="searchType">
+                <option value="carNumber">차 번호</option>
+            </select>
+            <!--        체크박스로 뭐 검색 할 건지, value 값은 그냥 각각 고정된 값으로 둠-->
+
+            <input type="text" name="keyword" id="search">
+            <button type="submit" id="searchBtn">검색</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>
