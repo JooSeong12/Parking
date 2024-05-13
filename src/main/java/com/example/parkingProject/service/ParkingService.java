@@ -29,15 +29,17 @@ public class ParkingService {
         this.parkingStateRepository = parkingStateRepository;
     }
 
-    public void currentPrice(){ //최종적으로 반환할 List는 dto가 들어간 list
+    public void currentPrice(){ //currentPrice를 계산해서 db에 저장해주는 메서드
         Long currentPrice = 0L;
         List<ParkingState> list = parkingStateRepository.findAll(); //우선 데이터베이스에서 리스트로 모든 값을 가져옴(현재 currentPrice는 null인 상태)
         for(int i = 0; i<list.size(); i++){
-            currentPrice = (long) calculateParkingFee(list.get(i).getInTime(), LocalDateTime.now()); // 메서드를 통해 구한 현재주차비를 Long으로 변환해서 선언
-            Long current = currentPrice;
-            list.get(i).setCurrentPrice(current); // 구한 주차비를 새로운 dto에 넣어서 최종적으로 반환해줄 list에 넣어주면 currentPrice까지 들어간 list가 완성
-            System.out.println(list.toString());
-            parkingStateRepository.save(list.get(i));
+            if(list.get(i).getCurrentPrice() == null){ //currentPrice가 비어있을 때만 시작
+                currentPrice = (long) calculateParkingFee(list.get(i).getInTime(), LocalDateTime.now()); // 메서드를 통해 구한 현재주차비를 Long으로 변환해서 선언
+                Long current = currentPrice;
+                list.get(i).setCurrentPrice(current); // 구한 주차비를 가져온 list에 저장
+                parkingStateRepository.save(list.get(i)); // currentPrice까지 들어간 list를 통해 db로 저장
+            }
+
         }
     }
 

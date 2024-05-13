@@ -15,15 +15,6 @@
             <th>현재 주차비</th>
         </tr>
 
-        <!--        현재는 데이터가 없어서 td는 예시로만 작성        -->
-        <!--            <tr>-->
-        <!--                <td>1</td>-->
-        <!--                <td>11수0954</td>-->
-        <!--                <td>2024.05.03 11:10:00</td>-->
-        <!--                <td>6,000</td>-->
-        <!--            </tr>-->
-
-        <!--DB 구조 정해지면 아래의 폼으로 작성예정-->
         <tr th:each="article : ${paging}" th:object="${article}">
             <td th:text="*{stateId}"></a></td>
             <td th:text="*{carNumber}"></td>

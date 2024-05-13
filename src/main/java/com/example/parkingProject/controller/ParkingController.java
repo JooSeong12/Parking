@@ -28,9 +28,9 @@ public class ParkingController {
 
     @GetMapping("parkingState")
     public String parkingState(Model model,
-                               @PageableDefault(page = 0, size = 2, sort = "stateId",
+                               @PageableDefault(page = 0, size = 10, sort = "stateId",
                                        direction = Sort.Direction.ASC) Pageable pageable){
-        parkingService.currentPrice();
+        parkingService.currentPrice(); //currentPrice를 먼저 db에 저장해준 후 시작
         Page<ParkingState> paging = parkingService.pagingList(pageable);
         int totalPage = paging.getTotalPages();
         List<Integer> barNumbers = parkingService.getPaginationBarNumbers(pageable.getPageNumber(), totalPage);
