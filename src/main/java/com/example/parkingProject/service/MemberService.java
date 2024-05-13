@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class MemberService {
     @Autowired
     EntityManager em;
-
     @Autowired
     MembershipRepository membershipRepository;
 
