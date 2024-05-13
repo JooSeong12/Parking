@@ -1,0 +1,7 @@
+diff a/src/main/java/com/example/parkingProject/controller/ParkingController.java b/src/main/java/com/example/parkingProject/controller/ParkingController.java	(rejected hunks)
+@@ -219,4 +219,5 @@
+         model.addAttribute("member",member);
+         System.out.println(dto);
+         return "parking/payment";
++    }
+ }
