@@ -7,7 +7,7 @@
     <title>Title</title>
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" class="content">
     <form th:action="@{/updateMember}" method="get">
 
         <table class="table">
@@ -37,40 +37,48 @@
         </table>
     </form>
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item" th:classappend="${searchList.number} <= 0? 'disabled'">
-                <a class="page-link"
-                   th:href="@{?searchType={searchType}&keyword={keyword}(page=${searchList.number - 1},searchType=${searchType},keyword=${keyword})}">
-                    Previous
-                </a>
-            </li>
-            <th:block th:each="pageNumber : ${paginationBarNumbers}">
-                <li class="page-item"><a class="page-link"
-                                         th:href="@{?searchType={searchType}&keyword={keyword}(page=${pageNumber},searchType=${searchType},keyword=${keyword})}"
-                                         th:text="${pageNumber+1}">1</a></li>
 
-            </th:block>
-            <li class="page-item" th:classappend="${searchList.number + 1} == ${searchList.totalPages}? 'disabled'">
-                <a class="page-link"
-                   th:href="@{?searchType={searchType}&keyword={keyword}(page=${searchList.number + 1},searchType=${searchType},keyword=${keyword})}">
-                    Next
-                </a>
-            </li>
-        </ul>
-    </nav>
 
-    <form th:action="@{search}" method="get" role="search">
-        <select name="searchType">
-            <option value="name">이름</option>
-            <option value="phone">전화번호</option>
-            <option value="carNumber">차 번호</option>
-        </select>
-        <!--        체크박스로 뭐 검색 할 건지, value 값은 그냥 각각 고정된 값으로 둠-->
+    <div class="page">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${searchList.number} <= 0? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{?searchType={searchType}&keyword={keyword}(page=${searchList.number - 1},searchType=${searchType},keyword=${keyword})}">
+                        Previous
+                    </a>
+                </li>
+                <th:block th:each="pageNumber : ${paginationBarNumbers}">
+                    <li class="page-item"><a class="page-link"
+                                             th:href="@{?searchType={searchType}&keyword={keyword}(page=${pageNumber},searchType=${searchType},keyword=${keyword})}"
+                                             th:text="${pageNumber+1}">1</a></li>
 
-        <input type="text" name="keyword" id="search">
-        <button type="submit" id="searchBtn">검색</button>
-    </form>
+                </th:block>
+                <li class="page-item" th:classappend="${searchList.number + 1} == ${searchList.totalPages}? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{?searchType={searchType}&keyword={keyword}(page=${searchList.number + 1},searchType=${searchType},keyword=${keyword})}">
+                        Next
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+    <div class="page">
+
+        <form th:action="@{search}" method="get" role="search">
+            <select name="searchType">
+                <option value="name">이름</option>
+                <option value="phone">전화번호</option>
+                <option value="carNumber">차 번호</option>
+            </select>
+            <!--        체크박스로 뭐 검색 할 건지, value 값은 그냥 각각 고정된 값으로 둠-->
+
+            <input type="text" name="keyword" id="search">
+            <button type="submit" id="searchBtn">검색</button>
+        </form>
+    </div>
+
 
 
 </div>
