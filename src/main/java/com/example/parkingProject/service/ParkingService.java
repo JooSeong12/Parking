@@ -4,6 +4,7 @@ import com.example.parkingProject.dto.ParkingStateDto;
 import com.example.parkingProject.entity.ParkingState;
 import com.example.parkingProject.repository.ParkingStateRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -51,7 +52,6 @@ public class ParkingService {
                 list.get(i).setCurrentPrice(current); // 구한 주차비를 가져온 list에 저장
                 parkingStateRepository.save(list.get(i)); // currentPrice까지 들어간 list를 통해 db로 저장
             }
-
         }
     }
 
@@ -78,5 +78,10 @@ public class ParkingService {
         int startNumber = Math.max(currentPageNumber - (BAR_LENGTH/2), 0);
         int endNumber = Math.min(startNumber+BAR_LENGTH, totalPages);
         return IntStream.range(startNumber, endNumber).boxed().toList();
+    }
+
+    public Page<ParkingState> searchByCarNumber(Pageable pageable,String keyword){
+        Page<ParkingState> states = parkingStateRepository.findByCarNumberContains(keyword, pageable);
+        return states;
     }
 }
