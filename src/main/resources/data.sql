@@ -309,6 +309,3 @@ insert into membership (membership_start, membership_end, charge, name, phone,ca
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-10-02', '2025-05-27', 465128, 'Jareb', '796-260-7667', '50다3676', '승용차');
 
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-10-02', '2025-05-27', 465128, 'Jareb', '796-260-7667', '19수0954', '승용차');
-
-
-insert into user_account values('root', '1111')
