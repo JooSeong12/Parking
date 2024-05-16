@@ -1,5 +1,6 @@
 package com.example.parkingProject.service;
 
+import com.example.parkingProject.dto.ParkingRecordDto;
 import com.example.parkingProject.dto.ParkingStateDto;
 import com.example.parkingProject.entity.ParkingState;
 import com.example.parkingProject.repository.ParkingStateRepository;
@@ -97,5 +98,17 @@ public class ParkingService {
         System.out.println(state);
 
         return ParkingStateDto.fromEntity(state);
+    }
+
+    public void payment(ParkingRecordDto dto) {
+        String sql = "SELECT s FROM ParkingState s WHERE s.carNumber = :carNumber";
+        TypedQuery<ParkingState> query = em.createQuery(sql,ParkingState.class)
+                .setParameter("carNumber",dto.getCarNumber());
+        em.remove(
+                query.getSingleResult()
+        );
+        em.persist(
+                ParkingRecordDto.fromDto(dto)
+        );
     }
 }

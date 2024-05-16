@@ -11,12 +11,10 @@ function updateTime() {
     document.getElementById('current-time').value = dateTimeString;
 }
 
-
 document.addEventListener("DOMContentLoaded", function() {
     updateTime();
     setInterval(updateTime, 1000);
 });
-
 
 function submitForm() {
 

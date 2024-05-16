@@ -5,45 +5,72 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" th:src="@{/js/parking.js}"></script>
+    <script type="text/javascript" th:src="@{/js/payment.js}"></script>
 </head>
 <body>
 <div class="content" layout:fragment="content">
-    <form id="frm" class="container" th:action="@{/parking}" method="post" th:object="${state}">
-        <div class="mb3">
-            <label class="form-label">차량 번호</label>
-            <input id="number" name="number" type="text" class="form-control" readonly th:value="*{carNumber}">
+    <form id="frm" class="container" th:action="@{/payment}" method="post" th:object="${dto}">
+        <table class="table">
+            <tr>
+                <td>
+                    <label class="form-label">차량 번호</label>
+                </td>
+                <td>
+                    <input id="number" name="number" type="text" class="form-control" readonly th:field="*{carNumber}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">입차 시간</label>
+                </td>
+                <td>
+                    <input name="number" type="text" class="form-control" readonly th:value="${#temporals.format(dto.inTime, 'yyyy-MM-dd HH:mm')}">
+                    <input name="number" type="hidden" class="form-control" readonly th:field="*{inTime}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">출차 시간</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" id="current-time" readonly th:value="*{outTime}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">가격</label>
+                </td>
+                <td>
+                    <input name="number" type="text" class="form-control" readonly th:field="*{finalPrice}" id="priceField">
+                    <input type="hidden" th:field="*{price}" id="realPrice">
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <input type="hidden" th:field="${member}" id="member">
+        <div th:if="${member != true}">
+            <input name="number" type="text" class="form-control" readonly value="비회원 고객님입니다">
         </div>
-        <div class="mb3">
-            <label class="form-label">입차 시간</label>
-            <input name="number" type="text" class="form-control" readonly th:value="${#temporals.format(state.inTime, 'yyyy-MM-dd HH:mm')}">
-            <input name="number" type="hidden" class="form-control" readonly th:value="*{inTime}">
+        <div th:if="${member == true}">
+            <input name="number" type="text" class="form-control" readonly value="회원 고객님입니다">
         </div>
-        <div class="mb3">
-            <label class="form-label">출차 시간</label>
-            <input type="text" class="form-control" id="current-time" readonly>
-        </div>
-        <div class="mb3">
-            <label class="form-label">가격</label>
-            <input name="number" type="text" class="form-control" readonly>
-        </div>
+        <input type="hidden" th:field="*{vigo}" id="setVigo1">
         <br>
-        <div class="mb3">
-            <div th:if="${member != true}">
-                <input name="number" type="text" class="form-control" readonly value="비회원 고객님입니다">
-                <input type="hidden" field="" value="비회원">
-            </div>
-            <div th:if="${member == true}">
-                <input name="number" type="text" class="form-control" readonly value="회원 고객님입니다">
-                <input type="hidden" field="" value="비회원">
-            </div>
-        </div>
-        <br>
-        <div>
-            <label class="form-label">영수증 번호 등록</label>
-            <input name="number" type="text" class="form-control">
-        </div>
-        <br>
-        <input type="submit" value="출차" class="btn btn-primary">
+        <table class="table">
+            <tr>
+                <td>
+                    <label class="form-label">영수증 번호 등록</label>
+                </td>
+                <td>
+                    <input name="number" type="text" class="form-control" id="bill">
+                </td>
+                <td>
+                    <input type="button" value="영수증 제출" class="btn btn-primary" onclick="billCheck()" id="billSubmit">
+                    <input type="hidden" th:field="*{vigo}" id="setVigo2">
+                </td>
+            </tr>
+        </table>
+        <input type="button" value="출차" class="btn btn-primary" onclick="submitForm()">
     </form>
 </div>
 </body>

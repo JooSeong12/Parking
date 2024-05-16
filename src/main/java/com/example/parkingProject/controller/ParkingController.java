@@ -1,6 +1,7 @@
 package com.example.parkingProject.controller;
 
 
+import com.example.parkingProject.dto.ParkingRecordDto;
 import com.example.parkingProject.dto.ParkingStateDto;
 import com.example.parkingProject.entity.ParkingState;
 import com.example.parkingProject.service.ParkingService;
@@ -209,12 +210,36 @@ public class ParkingController {
 
     @GetMapping("/payment")
     public String payment(@RequestParam("id")Long id, Model model){
-        ParkingStateDto dto = parkingService.findById(id);
-        model.addAttribute("state",dto);
+        ParkingStateDto state = parkingService.findById(id);
+        ParkingRecordDto dto = ParkingRecordDto.fromState(state);
+        Integer price = parkingService.calculateParkingFee(dto.getInTime(),LocalDateTime.now());
+        dto.setPrice(price);
+        try {
+            if (Integer.parseInt(dto.getCarNumber().substring(0,2)) <= 9){
+                price = price/2;
+            } else if (Integer.parseInt(dto.getCarNumber().substring(0,3)) >= 100){
+                if (Integer.parseInt(dto.getCarNumber().substring(0,3)) <= 199){
+                    price = price/2;
+                }
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        dto.setFinalPrice(price);
+        model.addAttribute("dto",dto);
         boolean member = memberService.findByCarNumber(dto.getCarNumber());
         model.addAttribute("member",member);
         System.out.println(dto);
         return "parking/payment";
     }
 
+    @PostMapping("/payment")
+    public String payment(@ModelAttribute("dto")ParkingRecordDto dto){
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime truncatedTime = now.truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
+        dto.setOutTime(truncatedTime);
+        System.out.println(dto);
+        parkingService.payment(dto);
+        return "redirect:/";
+    }
 }
