@@ -1,4 +1,3 @@
-
 insert into parking_state(car_number, in_time) values('09수0954', '2024-05-09 13:00:00');
 insert into parking_state(car_number, in_time) values('12마8637', '2024-05-09 11:00:00');
 insert into parking_state(car_number, in_time) values('59무8874', '2024-05-09 10:00:00');
@@ -204,3 +203,4 @@ insert into membership (membership_start, membership_end, charge, name, phone,ca
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-10-09', '2025-03-04', 504335, 'Cherin', '472-142-4025', '77자6262', '승용차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-04-06', '2025-03-03', 244391, 'Maryjo', '614-186-8526', '61마2305', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-10-02', '2025-05-27', 465128, 'Jareb', '796-260-7667', '50다3676', '승용차');
+
