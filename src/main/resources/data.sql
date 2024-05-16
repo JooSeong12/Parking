@@ -204,6 +204,7 @@ insert into membership (membership_start, membership_end, charge, name, phone,ca
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-10-09', '2025-03-04', 504335, 'Cherin', '472-142-4025', '77자6262', '승용차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-04-06', '2025-03-03', 244391, 'Maryjo', '614-186-8526', '61마2305', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-10-02', '2025-05-27', 465128, 'Jareb', '796-260-7667', '50다3676', '승용차');
+insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-10-02', '2025-05-27', 465128, 'Jareb', '796-260-7667', '09수0954', '승용차');
 
 insert into parking_record (car_number, in_time, out_time) values ('JN1AJ0HP6BM568738', '2023-08-23 14:24:47', '2023-08-23 17:06:28');
 insert into parking_record (car_number, in_time, out_time) values ('KMHTC6AD8EU156145', '2021-05-28 07:49:10', '2021-05-28 09:44:36');

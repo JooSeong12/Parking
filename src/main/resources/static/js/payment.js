@@ -1,16 +1,8 @@
 function updatePrice() {
-    var isMember = document.getElementById("member").value;
-    var priceField = document.getElementById("priceField");
-    var receiptNumber = document.getElementById("bill").value;
-    var setVigo = document.getElementById("setVigo1");
-
-    if (isMember === true) {
-        priceField.value = "0";
-        setVigo.value = "회원"
-    }else{
-        setVigo.value = "비회원"
-    }
-    setVigo.value = isMember;
+    var isMember = document.getElementById("isMember");
+    var setVigo = document.getElementById("setVigoMember");
+    isMember.value = 0;
+    setVigo.value = "회원";
 }
 
 function billCheck() {
@@ -31,7 +23,7 @@ function billDiscount(){
     var realValue = parseInt(realPrice.value);
     var discountPrice
     var button = document.getElementById("billSubmit");
-    var setVigo = document.getElementById("setVigo2");
+    var setVigo = document.getElementById("setVigoBill");
 
     if (billValue.includes("영화관")) {
         discountPrice = 24000;
