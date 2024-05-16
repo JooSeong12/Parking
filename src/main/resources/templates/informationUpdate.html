@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/check.js}"></script>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+    <h4>회원가입</h4>
+    <form id="frm" class="container" th:action="@{/informationUpdate}" method="post" th:object="${userAccountDto}">
+        <!--에러처리 하기 fragment 삽입-->
+        <div th:replace="~{fragments/form_errors :: formErrorsFragment}"></div>
+
+        <div class="mb3">
+            <label class="form-label">사용자 ID</label>
+            <input id="userId" name="userId" type="text" class="form-control" th:field="*{userId}">
+            <div class="error-class" th:error="*{userId}"></div>
+        </div>
+        <div class="mb3">
+            <label class="form-label">비밀번호</label>
+            <input id="password1" name="password1" type="password" class="form-control" th:field="*{password1}">
+            <div class="error-class" th:error="*{password1}"></div>
+        </div>
+        <div class="mb3">
+            <label class="form-label">비밀번호 확인</label>
+            <input id="password2" name="password2" type="password" class="form-control" th:field="*{password2}">
+            <div class="error-class" th:error="*{password2}"></div>
+        </div>
+
+        <input type="submit" value="정보수정" class="btn btn-primary">
+        <input type="button" value="다시" class="btn btn-primary" onclick="res()">
+    </form>
+</div>
+</body>
+</html>
