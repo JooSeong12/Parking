@@ -21,9 +21,6 @@
             <td th:text="*{stateId}"></a></td>
             <td th:text="*{carNumber}"></td>
             <td th:text="${#temporals.format(article.inTime, 'yyyy-MM-dd HH:mm')}"></td>
-<<<<<<< HEAD
-            <td th:text="*{currentPrice == 1 ? '회원' : currentPrice}"></td>  <!--currentPrice가 1이면 회원을 출력 그렇지 않으면 추차비를 출력-->
-=======
             <td th:text="*{currentPrice}"></td>
             <td>
                 <form th:action="@{/payment}" method="get">
@@ -31,7 +28,6 @@
                     <input type="submit" value="출차" class="btn btn-primary">
                 </form>
             </td>
->>>>>>> 계산
         </tr>
     </table>
     <div class="page">
