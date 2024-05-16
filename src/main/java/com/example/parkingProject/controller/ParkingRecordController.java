@@ -34,7 +34,7 @@ public class ParkingRecordController {
         List<Integer> barNumbers=paginationService.getPaginationBarNumbers(pageable.getPageNumber(),totalPage);
         model.addAttribute("paginationBarNumbers", barNumbers);
         model.addAttribute("paging", paging);
-        return "/member/parkingRecord";
+        return "/parking/parkingRecord";
     }
 
     @GetMapping("/parkingRecord/search")
@@ -58,7 +58,7 @@ public class ParkingRecordController {
         model.addAttribute("paginationBarNumbers", barNumbers);
         model.addAttribute("paging", paging);
         model.addAttribute("param", searchParam);
-        return "/member/searchRecord";
+        return "/parking/searchRecord";
     }
 
 }
