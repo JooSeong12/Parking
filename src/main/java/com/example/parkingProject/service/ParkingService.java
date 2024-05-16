@@ -1,5 +1,6 @@
 package com.example.parkingProject.service;
 
+import com.example.parkingProject.dto.ParkingRecordDto;
 import com.example.parkingProject.dto.ParkingStateDto;
 import com.example.parkingProject.entity.Membership;
 import com.example.parkingProject.entity.ParkingState;
@@ -111,8 +112,29 @@ public class ParkingService {
         return states;
     }
 
-    public void save(ParkingStateDto dto){
+
+    public void save(ParkingStateDto dto) {
         ParkingState parkingState1 = ParkingStateDto.fromDto(dto);
         em.persist(parkingState1);
+    }
+
+    public ParkingStateDto findById(Long id) {
+        ParkingState state = parkingStateRepository.findById(id).orElse(null);
+        System.out.println(state);
+
+        return ParkingStateDto.fromEntity(state);
+    }
+
+    public void payment(ParkingRecordDto dto) {
+        String sql = "SELECT s FROM ParkingState s WHERE s.carNumber = :carNumber";
+        TypedQuery<ParkingState> query = em.createQuery(sql,ParkingState.class)
+                .setParameter("carNumber",dto.getCarNumber());
+        em.remove(
+                query.getSingleResult()
+        );
+        em.persist(
+                ParkingRecordDto.fromDto(dto)
+        );
+
     }
 }

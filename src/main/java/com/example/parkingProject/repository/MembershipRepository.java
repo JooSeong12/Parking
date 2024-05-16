@@ -14,4 +14,5 @@ public interface MembershipRepository extends JpaRepository<Membership, Long> {
 
     Page<Membership> findByCarNumberContains(String keyword, Pageable pageable);
 
+    Membership findByCarNumber(String carNumber);
 }
