@@ -19,10 +19,15 @@ public class SecurityConfig {
         http.authorizeHttpRequests((request) -> request
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
-                        .requestMatchers("/**").permitAll())
-//                .anyRequest().authenticated())
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/parking").permitAll()
+                        .requestMatchers("/informationUpdate").permitAll()
+                        .requestMatchers("/parkingState").permitAll()
+//                .anyRequest().authenticated()
+        )
 
-                .formLogin((form)->form.loginPage("/login")
+                .formLogin(
+                        (form)->form.loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/", true))
 

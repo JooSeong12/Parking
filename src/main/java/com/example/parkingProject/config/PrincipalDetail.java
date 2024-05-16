@@ -17,7 +17,8 @@ public class PrincipalDetail implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Collection<GrantedAuthority> collect = new ArrayList<>();
+        return collect;
     }
 
     @Override
