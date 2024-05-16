@@ -10,21 +10,22 @@
 <body>
 <div class="content" layout:fragment="content">
     <form class="select-box" th:action="@{/parkingRecord/search}" method="get">
-        <!-- 현재연도~목표연도까지 셀렉스박스 -->
         <select class="form-select" aria-label="Default select example" style="width:200px;height:30px;" name="year">
+            <!-- 현재연도~목표연도까지 셀렉스박스 -->
             <option disabled selected>연도</option>
             <option th:each="i : ${#numbers.sequence(#dates.year(#dates.createNow()),2020)}" th:value="${i}" th:text="${i}"></option>
         </select>
-        <!--  월 선택 셀렉트박스  -->
         <select class="form-select" aria-label="Default select example" style="width:200px;height:30px;" name="month">
+            <!--  월 선택 셀렉트박스  -->
             <option disabled selected>월</option>
             <option th:each="i : ${#numbers.sequence(1,12)}" th:value="${i}" th:text="${i}"></option>
         </select>
-        <!--  일 선택 셀렉트박스  -->
         <select class="form-select" aria-label="Default select example" style="width:200px;height:30px;" name="day">
+            <!--  일 선택 셀렉트박스  -->
             <option disabled selected>일</option>
             <option th:each="i : ${#numbers.sequence(1,31)}" th:value="${i}" th:text="${i}"></option>
         </select>
+            <!-- 차량번호 검색 인풋박스 -->
         <input type="text" placeholder="차량번호" name="keyword" id="keyword">
         <input type="submit" value="검색">
     </form>
@@ -50,13 +51,13 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item" th:classappend="${paging.number}<=0? 'disabled'">
-                    <a class="page-link" th:href="@{/parkingRecord(page=${paging.number-1})}">Previous</a>
+                    <a class="page-link" th:href="@{/parkingRecord/search(page=${paging.number-1},year=${param.year},month=${param.month},day=${param.day},keyword=${keyword})}">Previous</a>
                 </li>
                 <li th:each="pageNumber : ${paginationBarNumbers}" class="page-item">
-                    <a class="page-link" th:href="@{/parkingRecord(page=${pageNumber})}" th:text="${pageNumber+1}">1</a>
+                    <a class="page-link" th:href="@{/parkingRecord/search(page=${pageNumber},year=${param.year},month=${param.month},day=${param.day},keyword=${keyword})}" th:text="${pageNumber+1}">1</a>
                 </li>
                 <li class="page-item" th:classappend="${paging.number+1}==${paging.totalPages}? 'disabled'">
-                    <a class="page-link" th:href="@{/parkingRecord(page=${paging.number+1})}">Next</a>
+                    <a class="page-link" th:href="@{/parkingRecord/search(page=${paging.number+1},year=${param.year},month=${param.month},day=${param.day},keyword=${keyword})}">Next</a>
                 </li>
             </ul>
         </nav>

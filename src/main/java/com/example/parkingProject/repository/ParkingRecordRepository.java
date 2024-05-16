@@ -14,9 +14,13 @@ import java.util.List;
 
 @Repository
 public interface ParkingRecordRepository extends JpaRepository<ParkingRecord, Long> {
-    @Query(value = "SELECT * FROM parking_record WHERE DATE(in_time)= :dateTime ORDER BY register_id LIMIT 10 OFFSET 1", nativeQuery = true)
-    Page<ParkingRecord> searchRecord(@Param("dateTime") LocalDate dateTime,
-                                     @Param("pageable") Pageable pageable);
 
-    Page<ParkingRecord> findByInTimeBetweenContains(LocalDateTime startDate,LocalDateTime endDate , Pageable pageable);
+    // 날짜로만 검색
+    Page<ParkingRecord> findByInTimeBetweenOrderByInTime(LocalDateTime startDate,LocalDateTime endDate , Pageable pageable);
+
+    // 날짜에 해당하는 차량번호로 검색
+    Page<ParkingRecord> findByInTimeBetweenAndCarNumberContains(LocalDateTime startDate, LocalDateTime endDate, String keyword, Pageable pageable);
+
+    // 차량 번호로만 검색
+    Page<ParkingRecord> findByCarNumberContains(String keyword, Pageable pageable);
 }
