@@ -5,30 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script></script>
+    <link rel="stylesheet" th:href="@{/css/paging.css}">
 </head>
 <body>
 <div class="content" layout:fragment="content">
-    <form class="select-box" th:action="@{/parkingRecord/search}" method="get">
-        <select class="form-select" aria-label="Default select example" style="width:200px;height:30px;" name="year">
-            <!-- 현재연도~목표연도까지 셀렉스박스 -->
-            <option disabled selected>연도</option>
-            <option th:each="i : ${#numbers.sequence(#dates.year(#dates.createNow()),2020)}" th:value="${i}" th:text="${i}"></option>
-        </select>
-        <select class="form-select" aria-label="Default select example" style="width:200px;height:30px;" name="month">
-            <!--  월 선택 셀렉트박스  -->
-            <option disabled selected>월</option>
-            <option th:each="i : ${#numbers.sequence(1,12)}" th:value="${i}" th:text="${i}"></option>
-        </select>
-        <select class="form-select" aria-label="Default select example" style="width:200px;height:30px;" name="day">
-            <!--  일 선택 셀렉트박스  -->
-            <option disabled selected>일</option>
-            <option th:each="i : ${#numbers.sequence(1,31)}" th:value="${i}" th:text="${i}"></option>
-        </select>
-            <!-- 차량번호 검색 인풋박스 -->
-        <input type="text" placeholder="차량번호" name="keyword" id="keyword">
-        <input type="submit" value="검색">
-    </form>
     <table class="table">
         <tr>
             <th>ID</th>
@@ -47,6 +27,7 @@
             <td th:text="*{price}+원"></td>
         </tr>
     </table>
+    <div class="page">
     <table>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -62,6 +43,27 @@
             </ul>
         </nav>
     </table>
+        <form class="select-box" th:action="@{/parkingRecord/search}" method="get">
+            <!-- 현재연도~목표연도까지 셀렉스박스 -->
+            <select class="form-select" aria-label="Default select example" style="width:200px;height:30px;" name="year" id="year" onchange="yearBox()">
+                <option selected hidden>연도</option>
+                <option th:each="i : ${#numbers.sequence(#dates.year(#dates.createNow()),2020)}" th:value="${i}" th:text="${i}"></option>
+            </select>
+            <!--  월 선택 셀렉트박스  -->
+            <select class="form-select" aria-label="Default select example" style="width:200px;height:30px;" name="month" id="month" onchange="monthBox()" disabled="true">
+                <option selected hidden>월</option>
+                <option th:each="z : ${#numbers.sequence(1,12)}" th:value="${z}" th:text="${z}"></option>
+            </select>
+            <!--  일 선택 셀렉트박스  -->
+            <select class="form-select" aria-label="Default select example" style="width:200px;height:30px;" name="day" id="day" onchange="monthBox()" disabled="true">
+                <option selected hidden>일</option>
+                <option th:each="x : ${#numbers.sequence(1,31)}" th:value="${x}" th:text="${x}"></option>
+            </select>
+            <!-- 차량번호 검색 -->
+            <input type="text" placeholder="차량번호" name="keyword" id="keyword">
+            <input type="submit" value="검색">
+        </form>
+    </div>
 </div>
 
 </body>
