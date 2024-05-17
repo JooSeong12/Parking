@@ -16,16 +16,19 @@
         <div class="mb3">
             <label class="form-label">이름</label>
             <input id="username" name="username" type="text" class="form-control" th:field="*{name}">
+            <span th:errors="*{name}"></span>
 
         </div>
         <div class="mb3">
             <label class="form-label">전화번호</label>
             <input id="phone" name="phone" type="text" class="form-control" th:field="*{phone}">
+            <span th:errors="*{phone}"></span>
 
         </div>
         <div class="mb3">
             <label class="form-label">차량 번호</label>
             <input id="number" name="number" type="text" class="form-control" th:field="*{carNumber}">
+            <span th:errors="*{carNumber}"></span>
 
         </div>
         <div class="mb3">
@@ -37,6 +40,7 @@
                 ></option>
 
             </select>
+            <span th:errors="*{membershipType}"></span>
         </div>
 
         <div>

@@ -15,28 +15,25 @@
             <a class="nav-link active" aria-current="page" th:href="@{/parkingState}">주차현황</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" th:href="@{/parkingRecord}">주차기록</a>
+            <a class="nav-link active" aria-current="page" th:href="@{/parkingRecord}" sec:authorize="hasRole('ADMIN')">주차기록</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" th:href="@{/viewMember}">회원조회</a>
+            <a class="nav-link active" aria-current="page" th:href="@{/viewMember}" sec:authorize="hasRole('ADMIN')">회원조회</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" th:href="@{/insertMember}">회원입력</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" th:href="@{/parking}">주차 시작</a>
+            <a class="nav-link active" aria-current="page" th:href="@{/insertMember}">회원제 가입</a>
           </li>
         </ul>
-        <div class="text-end">
-          <a role="button" id="signup" class="btn btn-outline-primary"
-             sec:authorize="isAnonymous()"
-            th:href="@{informationUpdate}">회원가입</a>
-          <a role="button" id="login" class="btn btn-outline-primary" sec:authorize="isAnonymous()" th:href="@{/login}">Login</a>
-          <form th:action="@{/logout}" sec:authorize="isAuthenticated()"
-                method="post">
-            <button type="submit" class="btn btn-outline-primary">Logout</button>
-          </form>
-        </div>
+      </div>
+      <div class="text-end">
+        <a role="button" id="signup" class="btn btn-outline-primary"
+           sec:authorize="isAuthenticated()"
+           th:href="@{informationUpdate}">신규 관리자 추가</a>
+        <a role="button" id="login" class="btn btn-outline-primary" sec:authorize="isAnonymous()" th:href="@{/login}">관리자 화면</a>
+        <a role="button" id="logout" class="btn btn-outline-primary me-2"
+           sec:authorize="isAuthenticated()"
+           th:href="@{/logout}">관리자 페이지 나가기</a>
+        </form>
       </div>
     </div>
   </nav>

@@ -16,6 +16,7 @@
         <div class="mb3">
             <label class="form-label">차량 번호</label>
             <input id="number" name="number" type="text" class="form-control" th:field="*{carNumber}">
+            <span th:errors="*{carNumber}"></span>
         </div>
 
         <div>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/paging.css}">
+</head>
+<body>
+<div class="content" layout:fragment="content">
+    <table class="table">
+        <tr>
+            <th>주차번호</th>
+            <th>차량번호</th>
+            <th>입차시간</th>
+            <th>현재 주차비</th>
+            <th>출차</th>
+        </tr>
+
+        <tr th:each="article : ${paging}" th:object="${article}">
+            <td th:text="*{stateId}"></a></td>
+            <td th:text="*{carNumber}"></td>
+            <td th:text="${#temporals.format(article.inTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="*{currentPrice}"></td>
+            <td>
+                <form th:action="@{/payment}" method="get">
+                    <input type="hidden" name="id" th:value="*{stateId}">
+                    <input type="submit" value="출차" class="btn btn-primary">
+                </form>
+            </td>
+        </tr>
+    </table>
+    <div class="page">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${paging.number} <= 0? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{?searchType={searchType}&keyword={keyword}(page=${paging.number - 1},searchType=${searchType},keyword=${keyword})}">
+                        Previous
+                    </a>
+                </li>
+                <th:block th:each="pageNumber : ${paginationBarNumbers}">
+                    <li class="page-item"><a class="page-link"
+                                             th:href="@{?searchType={searchType}&keyword={keyword}(page=${pageNumber},searchType=${searchType},keyword=${keyword})}"
+                                             th:text="${pageNumber+1}">1</a></li>
+
+                </th:block>
+                <li class="page-item" th:classappend="${paging.number + 1} == ${paging.totalPages}? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{?searchType={searchType}&keyword={keyword}(page=${paging.number + 1},searchType=${searchType},keyword=${keyword})}">
+                        Next
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="page search">
+        <form th:action="@{/parkingState/search}" method="get" role="search">
+            <select name="searchType">
+                <option value="carNumber">차 번호</option>
+            </select>
+            <!--        체크박스로 뭐 검색 할 건지, value 값은 그냥 각각 고정된 값으로 둠-->
+
+            <input type="text" name="keyword" id="search">
+            <button type="submit" id="searchBtn">검색</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

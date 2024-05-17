@@ -2,6 +2,7 @@ package com.example.parkingProject.config;
 
 import com.example.parkingProject.entity.UserAccount;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class PrincipalDetail implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collect = new ArrayList<>();
+        collect.add(new SimpleGrantedAuthority(user.getUserRole().getDesc()));
         return collect;
     }
 

@@ -1309,3 +1309,6 @@ insert into membership (membership_start, membership_end, charge, name, phone,ca
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-10-02', '2025-05-27', 465128, 'Jareb', '796-260-7667', '50다3676', '승용차');
 
 
+
+INSERT INTO public.user_account (user_id,user_password,user_role) VALUES
+	 ('user','$2a$10$FEkU9k.htsL2a5WmimsxdedMwpmHoLLnEm2/PVJ8IT6cmYV15Wtg2','ADMIN');
