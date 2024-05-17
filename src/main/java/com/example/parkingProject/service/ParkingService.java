@@ -27,6 +27,9 @@ import java.util.stream.IntStream;
 public class ParkingService {
     @Autowired
     EntityManager em;
+
+    @Autowired
+    MemberService memberService;
     private final ParkingState parkingState;
     private final ParkingStateRepository parkingStateRepository;
     private final Membership membership;
@@ -68,12 +71,8 @@ public class ParkingService {
                 List<String > list2 = membershipCar(); //차량번호를 비교할 대조군 리스트
                 boolean hasCommonElement = false;
                 String carNumber = list.get(i).getCarNumber(); //현재 주차중인 차량번호를 선언
-                if (list2.contains(carNumber)) { //현재 주차중인 차량번호와 고객들의 차량번호를 대조해줌
-                    hasCommonElement = true; // 대조결과 있다면 true로 지정
-                }
-
-                if (hasCommonElement == true) {
-                    currentPrice = 1L; //회원의 차량번호라면 현재 주차비를 1로 해준다(주차비 계산 시 1은 나올 수 없는 숫자이기때문에 1이 있다면 회원의 차량이고 해당 차량은 현재주차비에서 1대신 회원으로 출력)
+                if (memberService.findByCarNumber(carNumber) == true) {
+                    currentPrice = null; //회원의 차량번호라면 현재 주차비를 1로 해준다(주차비 계산 시 1은 나올 수 없는 숫자이기때문에 1이 있다면 회원의 차량이고 해당 차량은 현재주차비에서 1대신 회원으로 출력)
                 }
                 Long current = currentPrice;
                 list.get(i).setCurrentPrice(current); // 구한 주차비를 가져온 list에 저장

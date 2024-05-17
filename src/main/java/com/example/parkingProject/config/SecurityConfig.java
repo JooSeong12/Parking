@@ -25,7 +25,7 @@ public class SecurityConfig {
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/parking").permitAll()
                         .requestMatchers("/insertMember").permitAll()
-                        .requestMatchers("/parkingState/**").permitAll()
+                        .requestMatchers("/parkingState").permitAll()
                         .requestMatchers("/payment").permitAll()
                         .anyRequest().hasRole("ADMIN")
 //                .anyRequest().authenticated()
@@ -34,7 +34,8 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/", true))
 
-                .logout(out-> out.logoutSuccessUrl("/login").logoutUrl("/logout"))
+                .logout(out-> out.logoutSuccessUrl("/")
+                        .logoutUrl("/logout"))
                 .csrf(csrf->csrf.disable());
         return http.build();
     }

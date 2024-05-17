@@ -21,7 +21,7 @@
             <td th:text="*{stateId}"></a></td>
             <td th:text="*{carNumber}"></td>
             <td th:text="${#temporals.format(article.inTime, 'yyyy-MM-dd HH:mm')}"></td>
-            <td th:text="*{currentPrice}"></td>
+            <td th:text="*{currentPrice==null ? '회원' : currentPrice}"></td>
             <td>
                 <form th:action="@{/payment}" method="get">
                     <input type="hidden" name="id" th:value="*{stateId}">
