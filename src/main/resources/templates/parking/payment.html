@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/parking.js}"></script>
+    <script type="text/javascript" th:src="@{/js/payment.js}"></script>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+    <form id="frm" class="container" th:action="@{/payment}" method="post" th:object="${dto}">
+        <table class="table">
+            <tr>
+                <td>
+                    <label class="form-label">차량 번호</label>
+                </td>
+                <td>
+                    <input id="number" name="number" type="text" class="form-control" readonly th:field="*{carNumber}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">입차 시간</label>
+                </td>
+                <td>
+                    <input name="number" type="text" class="form-control" readonly th:value="${#temporals.format(dto.inTime, 'yyyy-MM-dd HH:mm')}">
+                    <input name="number" type="hidden" class="form-control" readonly th:field="*{inTime}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">출차 시간</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" id="current-time" readonly th:value="*{outTime}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">가격</label>
+                </td>
+                <td>
+                    <div th:if="${member != true}">
+                        <input name="number" type="text" class="form-control" readonly th:field="*{finalPrice}" id="priceField">
+                    </div>
+                    <div th:if="${member == true}">
+                        <input name="number" type="text" class="form-control" readonly th:field="*{finalPrice}" id="isMember">
+                    </div>
+                    <input type="hidden" th:field="*{price}" id="realPrice">
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <input type="hidden" th:value="${member}" id="member">
+        <div th:if="${member != true}">
+            <input name="number" type="text" class="form-control" readonly value="비회원 고객님입니다">
+        </div>
+        <div th:if="${member == true}">
+            <input name="number" type="text" class="form-control" readonly value="회원 고객님입니다">
+            <input type="hidden" th:field="*{vigo}" id="setVigoMember">
+        </div>
+        <br>
+        <div th:if="${member == true}">
+            <table class="table">
+                <tr>
+                    <td>
+                        <label class="form-label">영수증 번호 등록</label>
+                    </td>
+                    <td>
+                        <input name="number" type="text" class="form-control" value="회원은 무료입니다" disabled>
+                    </td>
+                    <td>
+                        <input type="button" value="영수증 제출" class="btn btn-primary" onclick="billCheck()" disabled>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${member != true}">
+            <table class="table">
+                <tr>
+                    <td>
+                        <label class="form-label">영수증 번호 등록</label>
+                    </td>
+                    <td>
+                        <input name="number" type="text" class="form-control" id="bill">
+                    </td>
+                    <td>
+                        <input type="button" value="영수증 제출" class="btn btn-primary" onclick="billCheck()" id="billSubmit">
+                        <input type="hidden" th:field="*{vigo}" id="setVigoBill">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <input type="button" value="출차" class="btn btn-primary" onclick="submitForm()">
+    </form>
+</div>
+</body>
+</html>
