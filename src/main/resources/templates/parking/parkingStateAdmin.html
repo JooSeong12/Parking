@@ -42,15 +42,15 @@
             <ul class="pagination">
                 <li class="page-item" th:classappend="${paging.number} <= 0? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/parkingState(page=${paging.number-1})}">
+                       th:href="@{/parkingState/admin(page=${paging.number-1})}">
                         Previous</a>
                 </li>
                 <th:block th:each="pageNumber : ${paginationBarNumbers}">
-                    <li class="page-item"><a class="page-link" th:href="@{/parkingStateAdmin(page=${pageNumber})}"
+                    <li class="page-item"><a class="page-link" th:href="@{/parkingState/admin(page=${pageNumber})}"
                                              th:text="${pageNumber+1}">1</a></li>
                 </th:block>
                 <li class="page-item" th:classappend="${paging.number + 1} == ${paging.totalPages}? 'disabled'"><a class="page-link"
-                                                                                                                   th:href="@{/parkingStateAdmin(page=${paging.number+1})}">Next</a>
+                                                                                                                   th:href="@{/parkingState/admin(page=${paging.number+1})}">Next</a>
                 </li>
             </ul>
         </nav>
