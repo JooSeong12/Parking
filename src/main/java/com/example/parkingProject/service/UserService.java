@@ -1,5 +1,6 @@
 package com.example.parkingProject.service;
 
+import com.example.parkingProject.constant.UserRole;
 import com.example.parkingProject.dto.UserAccountDto;
 import com.example.parkingProject.entity.UserAccount;
 import jakarta.persistence.EntityManager;
@@ -21,6 +22,7 @@ public class UserService {
         account.setUserPassword(passwordEncoder.encode(
                 userAccountDto.getPassword1()
         ));
+        account.setUserRole(UserRole.ADMIN);
         em.persist(account);
     }
 }

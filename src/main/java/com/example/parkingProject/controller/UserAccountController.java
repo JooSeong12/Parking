@@ -19,7 +19,6 @@ public class UserAccountController {
 
     @GetMapping("login")
     public String login(){
-
         return "login";
     }
 

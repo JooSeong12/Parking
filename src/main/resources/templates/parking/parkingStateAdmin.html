@@ -15,6 +15,7 @@
             <th>입차시간</th>
             <th>현재 주차비</th>
             <th>출차</th>
+            <th>비고</th>
         </tr>
 
         <tr th:each="article : ${paging}" th:object="${article}">
@@ -28,6 +29,12 @@
                     <input type="submit" value="출차" class="btn btn-primary">
                 </form>
             </td>
+            <td>
+                <form th:action="@{/vigo}" method="get">
+                    <input type="hidden" name="id" th:value="*{stateId}">
+                    <input type="submit" value="비고" class="btn btn-primary">
+                </form>
+            </td>
         </tr>
     </table>
     <div class="page">
@@ -39,18 +46,18 @@
                         Previous</a>
                 </li>
                 <th:block th:each="pageNumber : ${paginationBarNumbers}">
-                    <li class="page-item"><a class="page-link" th:href="@{/parkingState(page=${pageNumber})}"
+                    <li class="page-item"><a class="page-link" th:href="@{/parkingStateAdmin(page=${pageNumber})}"
                                              th:text="${pageNumber+1}">1</a></li>
                 </th:block>
                 <li class="page-item" th:classappend="${paging.number + 1} == ${paging.totalPages}? 'disabled'"><a class="page-link"
-                                                                                                                   th:href="@{/parkingState(page=${paging.number+1})}">Next</a>
+                                                                                                                   th:href="@{/parkingStateAdmin(page=${paging.number+1})}">Next</a>
                 </li>
             </ul>
         </nav>
     </div>
 
     <div class="page search">
-        <form th:action="@{/parkingState/search}" method="get" role="search">
+        <form th:action="@{/parkingState/admin/search}" method="get" role="search">
             <select name="searchType">
                 <option value="carNumber">차 번호</option>
             </select>

@@ -35,15 +35,21 @@
             <ul class="pagination">
                 <li class="page-item" th:classappend="${paging.number} <= 0? 'disabled'">
                     <a class="page-link"
-                       th:href="@{/parkingState(page=${paging.number-1})}">
-                        Previous</a>
+                       th:href="@{?searchType={searchType}&keyword={keyword}(page=${paging.number - 1},searchType=${searchType},keyword=${keyword})}">
+                        Previous
+                    </a>
                 </li>
                 <th:block th:each="pageNumber : ${paginationBarNumbers}">
-                    <li class="page-item"><a class="page-link" th:href="@{/parkingState(page=${pageNumber})}"
+                    <li class="page-item"><a class="page-link"
+                                             th:href="@{?searchType={searchType}&keyword={keyword}(page=${pageNumber},searchType=${searchType},keyword=${keyword})}"
                                              th:text="${pageNumber+1}">1</a></li>
+
                 </th:block>
-                <li class="page-item" th:classappend="${paging.number + 1} == ${paging.totalPages}? 'disabled'"><a class="page-link"
-                                                                                                                   th:href="@{/parkingState(page=${paging.number+1})}">Next</a>
+                <li class="page-item" th:classappend="${paging.number + 1} == ${paging.totalPages}? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{?searchType={searchType}&keyword={keyword}(page=${paging.number + 1},searchType=${searchType},keyword=${keyword})}">
+                        Next
+                    </a>
                 </li>
             </ul>
         </nav>

@@ -29,6 +29,7 @@ function updatePrice() {
      document.getElementById("number").focus(); // 입력 필드로 포커스 이동
                          return false;
                          }
+
 }
 
 function resetForm() {

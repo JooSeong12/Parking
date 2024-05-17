@@ -17,8 +17,8 @@
                 <th>전화번호</th>
                 <th>차 번호</th>
                 <th>멤버십 번호</th>
-                <th>멤버십 시작 시간</th>
-                <th>멤버십 종료 시간</th>
+                <th>멤버십 시작일</th>
+                <th>멤버십 종료일</th>
                 <th></th>
             </tr>
 
@@ -31,7 +31,7 @@
                 <td th:text="*{membershipEnd}">주차 시간</td>
                 <td>
                     <input type="hidden" name="id" th:value="*{memberId}">
-                    <input type="submit" value="수정">
+                    <input type="submit" value="수정" class="btn btn-primary">
                     <!--                여기에 회원 수정 링크-->
                 </td>
             </tr>
@@ -76,7 +76,7 @@
             <!--        체크박스로 뭐 검색 할 건지, value 값은 그냥 각각 고정된 값으로 둠-->
 
             <input type="text" name="keyword" id="search">
-            <button type="submit" id="searchBtn">검색</button>
+            <button type="submit" id="searchBtn" >검색</button>
         </form>
     </div>
 

@@ -1,5 +1,6 @@
 package com.example.parkingProject.config;
 
+import com.example.parkingProject.constant.UserRole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,14 +20,22 @@ public class SecurityConfig {
         http.authorizeHttpRequests((request) -> request
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
-                        .requestMatchers("/**").permitAll())
-//                .anyRequest().authenticated())
-
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/informationUpdate").permitAll()
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/parking").permitAll()
+                        .requestMatchers("/insertMember").permitAll()
+                        .requestMatchers("/parkingState").permitAll()
+                        .requestMatchers("/payment").permitAll()
+                        .anyRequest().hasRole("ADMIN")
+//                .anyRequest().authenticated()
+                )
                 .formLogin((form)->form.loginPage("/login")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/", true))
 
-                .logout(out-> out.logoutSuccessUrl("/login").logoutUrl("/logout"))
+                .logout(out-> out.logoutSuccessUrl("/")
+                        .logoutUrl("/logout"))
                 .csrf(csrf->csrf.disable());
         return http.build();
     }

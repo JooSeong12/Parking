@@ -12,6 +12,7 @@ import com.example.parkingProject.dto.MemberDto;
 import com.example.parkingProject.entity.Membership;
 import com.example.parkingProject.service.MemberService;
 import com.example.parkingProject.service.PaginationService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,7 +74,42 @@ public class ParkingController {
         //서칭+페이징을 위해 받아온 키워드와 검색타입도 넘김
         model.addAttribute("keyword", keyword);
         model.addAttribute("searchType", type);
-        return "parking/parkingState";
+        return "parking/searchState";
+    }
+
+    @GetMapping("parkingState/admin")
+    public String parkingStateAdmin(Model model,
+                               @PageableDefault(page = 0, size = 10, sort = "stateId",
+                                       direction = Sort.Direction.ASC) Pageable pageable){
+        parkingService.currentPrice(); //currentPrice를 먼저 db에 저장해준 후 시작
+        Page<ParkingState> paging = parkingService.pagingList(pageable);
+        int totalPage = paging.getTotalPages();
+        List<Integer> barNumbers = parkingService.getPaginationBarNumbers(pageable.getPageNumber(), totalPage);
+        model.addAttribute("paginationBarNumbers", barNumbers);
+        model.addAttribute("paging", paging);
+
+        return "parking/parkingStateAdmin";
+    }
+
+    @GetMapping("parkingState/admin/search")
+    public String parkingStateAdminSearch(@RequestParam("keyword")String keyword,
+                                     @RequestParam("searchType")String type,
+                                     Model model,
+                                     @PageableDefault(page = 0, size = 10, sort = "stateId",
+                                             direction = Sort.Direction.DESC) Pageable pageable){
+        Page<ParkingState> searchList = null;
+        List<Integer> barNumbers = null;
+        if(type.equals("carNumber")){
+            searchList = parkingService.searchByCarNumber(pageable,keyword);
+            int totalPage = searchList.getTotalPages();
+            barNumbers = parkingService.getPaginationBarNumbers(pageable.getPageNumber(), totalPage);
+        }
+        model.addAttribute("paginationBarNumbers", barNumbers);
+        model.addAttribute("paging", searchList);
+        //서칭+페이징을 위해 받아온 키워드와 검색타입도 넘김
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("searchType", type);
+        return "parking/searchStateAdmin";
     }
 
 
@@ -110,16 +147,14 @@ public class ParkingController {
     }
 
     @PostMapping("/insertMember")
-    private String signUp(@ModelAttribute("dto") MemberDto dto){
+    private String signUp(@Valid @ModelAttribute("dto") MemberDto dto,
+                          BindingResult result){
+        if (result.hasErrors()){
+            return "member/signUp";
+        }
         memberService.insert(dto);
         return "redirect:/";
     }
-
-    @GetMapping("/")
-    public String main(){
-        return "main";
-    }
-
 
     //회원 조회 페이지
     @GetMapping("viewMember")
@@ -194,14 +229,18 @@ public class ParkingController {
         return "member/search_view";
     }
 
-    @GetMapping("parking")
+    @GetMapping("/")
     public String parking(Model model){
         model.addAttribute("dto",new ParkingStateDto());
         return "parking/parking";
     }
 
     @PostMapping("/parking")
-    public String parking(@ModelAttribute("dto") ParkingStateDto dto) {
+    public String parking(@Valid @ModelAttribute("dto") ParkingStateDto dto,
+                          BindingResult result) {
+        if (result.hasErrors()){
+            return "parking/parking";
+        }
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime truncatedTime = now.truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         dto.setInTime(truncatedTime);
@@ -232,6 +271,30 @@ public class ParkingController {
         model.addAttribute("member",member);
         System.out.println(dto);
         return "parking/payment";
+    }
+    @GetMapping("/vigo")
+    public String vigo(@RequestParam("id")Long id, Model model){
+        ParkingStateDto state = parkingService.findById(id);
+        ParkingRecordDto dto = ParkingRecordDto.fromState(state);
+        Integer price = parkingService.calculateParkingFee(dto.getInTime(),LocalDateTime.now());
+        dto.setPrice(price);
+        try {
+            if (Integer.parseInt(dto.getCarNumber().substring(0,2)) <= 9){
+                price = price/2;
+            } else if (Integer.parseInt(dto.getCarNumber().substring(0,3)) >= 100){
+                if (Integer.parseInt(dto.getCarNumber().substring(0,3)) <= 199){
+                    price = price/2;
+                }
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        dto.setFinalPrice(0);
+        model.addAttribute("dto",dto);
+        boolean member = memberService.findByCarNumber(dto.getCarNumber());
+        model.addAttribute("member",member);
+        System.out.println(dto);
+        return "parking/vigo";
     }
 
     @PostMapping("/payment")
