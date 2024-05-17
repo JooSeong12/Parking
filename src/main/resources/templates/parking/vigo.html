@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" th:src="@{/js/parking.js}"></script>
+    <script type="text/javascript" th:src="@{/js/payment.js}"></script>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+    <form id="frm" class="container" th:action="@{/payment}" method="post" th:object="${dto}">
+        <table class="table">
+            <tr>
+                <td>
+                    <label class="form-label">차량 번호</label>
+                </td>
+                <td>
+                    <input id="number" name="number" type="text" class="form-control" readonly th:field="*{carNumber}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">입차 시간</label>
+                </td>
+                <td>
+                    <input name="number" type="text" class="form-control" readonly th:value="${#temporals.format(dto.inTime, 'yyyy-MM-dd HH:mm')}">
+                    <input name="number" type="hidden" class="form-control" readonly th:field="*{inTime}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">출차 시간</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" id="current-time" readonly th:value="*{outTime}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="form-label">사유 입력</label>
+                </td>
+                <td>
+                    <input type="text" class="form-control" th:field="*{vigo}">
+                </td>
+            </tr>
+        </table>
+        <input name="number" type="hidden" class="form-control" readonly th:field="*{finalPrice}">
+        <input type="hidden" th:field="*{price}">
+
+        <input type="button" value="출차" class="btn btn-primary" onclick="submitForm()">
+    </form>
+</div>
+</body>
+</html>

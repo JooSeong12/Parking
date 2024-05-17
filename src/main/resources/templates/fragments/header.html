@@ -12,7 +12,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" th:href="@{/parkingState}">주차현황</a>
+            <a class="nav-link active" aria-current="page" th:href="@{/parkingState}" sec:authorize="isAnonymous()">주차현황</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" th:href="@{/parkingState/admin}"  sec:authorize="hasRole('ADMIN')">주차현황</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" th:href="@{/parkingRecord}" sec:authorize="hasRole('ADMIN')">주차기록</a>
