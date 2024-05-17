@@ -12,23 +12,34 @@ function updatePrice() {
     // 정액제 가격을 입력 필드에 표시
     priceField.value = price;
 
-     if (selectedOption.text === "경차") {
-            // 경차를 선택한 경우 앞 두 자리가 01부터 09 사이의 값인지 확인
 
-                if (!(/^0[1-9]|^1\d{2}/.test(carNumberInput.value))) {
-                    // 앞 두 자리가 01부터 09 사이의 값이 아닌 경우
-                    alert("경차는 차량번호 앞 두 자리가 01부터 09 또는 100 부터 199 사이의 값이어야 합니다.");
-                    carNumberInput.value = ""; // 입력값 초기화
-                    document.getElementById("number").focus(); // 입력 필드로 포커스 이동
-                    return false;
-                }
-        }
 
-     if((/^9[1-7]|^9[0-9][0-7]/.test(carNumberInput.value))){
-     alert("대형 화물차는 등록불가합니다.")
-     document.getElementById("number").focus(); // 입력 필드로 포커스 이동
-                         return false;
-                         }
+}
+
+function submitForm(){
+    var form = document.getElementById("frm");
+    var carTypeSelect = document.getElementById("carTypeSelect");
+    var carNumberInput = document.getElementById("number");
+    var selectedOption = carTypeSelect.options[carTypeSelect.selectedIndex];
+    if (selectedOption.text === "경차") {
+                // 경차를 선택한 경우 앞 두 자리가 01부터 09 사이의 값인지 확인
+
+                    if (!(/^0[1-9]|^1\d{2}/.test(carNumberInput.value))) {
+                        // 앞 두 자리가 01부터 09 사이의 값이 아닌 경우
+                        alert("경차는 차량번호 앞 두 자리가 01부터 09 또는 100 부터 199 사이의 값이어야 합니다.");
+                        carNumberInput.value = ""; // 입력값 초기화
+                        document.getElementById("number").focus(); // 입력 필드로 포커스 이동
+                        return false;
+                    }
+            }
+
+         if((/^9[1-7]|^9[0-9][0-7]/.test(carNumberInput.value))){
+         alert("대형 화물차는 등록불가합니다.")
+         document.getElementById("number").focus(); // 입력 필드로 포커스 이동
+                             return false;
+                             }
+
+    form.submit();
 
 }
 
