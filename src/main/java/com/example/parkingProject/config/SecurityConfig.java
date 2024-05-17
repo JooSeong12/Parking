@@ -26,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers("/parking").permitAll()
                         .requestMatchers("/insertMember").permitAll()
                         .requestMatchers("/parkingState/**").permitAll()
+                        .requestMatchers("/payment").permitAll()
                         .anyRequest().hasRole("ADMIN")
 //                .anyRequest().authenticated()
                 )
