@@ -12,6 +12,7 @@ import com.example.parkingProject.dto.MemberDto;
 import com.example.parkingProject.entity.Membership;
 import com.example.parkingProject.service.MemberService;
 import com.example.parkingProject.service.PaginationService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,7 +74,7 @@ public class ParkingController {
         //서칭+페이징을 위해 받아온 키워드와 검색타입도 넘김
         model.addAttribute("keyword", keyword);
         model.addAttribute("searchType", type);
-        return "parking/parkingState";
+        return "parking/searchState";
     }
 
 
@@ -110,16 +112,14 @@ public class ParkingController {
     }
 
     @PostMapping("/insertMember")
-    private String signUp(@ModelAttribute("dto") MemberDto dto){
+    private String signUp(@Valid @ModelAttribute("dto") MemberDto dto,
+                          BindingResult result){
+        if (result.hasErrors()){
+            return "member/signUp";
+        }
         memberService.insert(dto);
         return "redirect:/";
     }
-
-    @GetMapping("/")
-    public String main(){
-        return "main";
-    }
-
 
     //회원 조회 페이지
     @GetMapping("viewMember")
@@ -194,14 +194,18 @@ public class ParkingController {
         return "member/search_view";
     }
 
-    @GetMapping("parking")
+    @GetMapping("/")
     public String parking(Model model){
         model.addAttribute("dto",new ParkingStateDto());
         return "parking/parking";
     }
 
     @PostMapping("/parking")
-    public String parking(@ModelAttribute("dto") ParkingStateDto dto) {
+    public String parking(@Valid @ModelAttribute("dto") ParkingStateDto dto,
+                          BindingResult result) {
+        if (result.hasErrors()){
+            return "parking/parking";
+        }
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime truncatedTime = now.truncatedTo(java.time.temporal.ChronoUnit.MINUTES);
         dto.setInTime(truncatedTime);

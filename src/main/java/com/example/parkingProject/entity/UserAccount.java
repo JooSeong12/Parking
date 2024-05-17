@@ -1,8 +1,7 @@
 package com.example.parkingProject.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.example.parkingProject.constant.UserRole;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -13,4 +12,6 @@ public class UserAccount {
     private String userId;
     @Column(nullable = false)
     private String userPassword;
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 }
