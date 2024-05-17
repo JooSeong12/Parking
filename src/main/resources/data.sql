@@ -1102,15 +1102,30 @@ INSERT INTO public.parking_record (final_price,price,in_time,out_time,parking_ti
 
 
 
-insert into parking_state(car_number, in_time) values('19수0954', '2024-05-09 13:00:00');
-insert into parking_state(car_number, in_time) values('12마8637', '2024-05-09 11:00:00');
-insert into parking_state(car_number, in_time) values('59무8874', '2024-05-09 10:00:00');
-insert into parking_state(car_number, in_time) values('101무8874', '2024-05-09 10:00:00');
+insert into parking_state (car_number, in_time) values('19수0954', '2024-05-09 13:00:00');
+insert into parking_state (car_number, in_time) values('12마8637', '2024-05-09 11:00:00');
+insert into parking_state (car_number, in_time) values ('200 바 9000', '2024-05-12T11:10:00');
+insert into parking_state (car_number, in_time) values('59무8874', '2024-05-09 10:00:00');
+insert into parking_state (car_number, in_time) values('76가0439', '2024-05-09 10:00:00');
+insert into parking_state (car_number, in_time) values('101무8874', '2024-05-10 11:13:00');
+insert into parking_state (car_number, in_time) values ('31아8000', '2024-05-13T15:45:00');
+insert into parking_state (car_number, in_time) values ('250 가 5000', '2024-05-12T11:10:00');
+insert into parking_state (car_number, in_time) values ('55사7000', '2024-05-15T19:00:00');
+insert into parking_state (car_number, in_time) values ('42가1000', '2024-05-16T06:10:00');
+insert into parking_state (car_number, in_time) values ('96자9000', '2024-05-13T15:45:00');
+insert into parking_state (car_number, in_time) values ('380 마 4000', '2024-05-10T07:00:00');
+insert into parking_state (car_number, in_time) values ('88마5000', '2024-05-12T08:30:00');
+insert into parking_state (car_number, in_time) values ('19다3000', '2024-05-16T01:36:00');
+insert into parking_state (car_number, in_time) values ('170 자 1000', '2024-05-12T11:10:00');
+insert into parking_state (car_number, in_time) values ('63라4000', '2024-05-16T17:41:00');
+insert into parking_state (car_number, in_time) values ('77나2000', '2024-05-16T06:18:00');
+insert into parking_state (car_number, in_time) values ('320 다 3000', '2024-05-11T09:20:00');
+
 
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-10-14', '2024-08-13', 709390, 'Dedie', '406-281-4371', '08바4618', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-09-16', '2025-03-19', 725127, 'Ash', '377-142-7696', '07타2977', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-12-24', '2025-03-25', 763983, 'Rhys', '530-407-6783', '09아1497', '경차');
-insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-05-02', '2024-05-30', 742181, 'Winona', '797-869-0967', '101자5626', '경차');
+insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-05-02', '2024-05-30', 742181, 'Winona', '797-869-0967', '12마8637', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-05-05', '2025-05-03', 889400, 'Gerri', '655-109-7490', '18자3639', '승용차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-08-05', '2024-07-09', 603839, 'Naoma', '880-801-4283', '105사1630', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-01-11', '2024-07-18', 420725, 'Anya', '869-717-8250', '50아5201', '승용차');
@@ -1151,7 +1166,7 @@ insert into membership (membership_start, membership_end, charge, name, phone,ca
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-07-27', '2024-10-28', 729997, 'Elvin', '133-340-4457', '76파3368', '승용차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-01-08', '2024-07-23', 258123, 'Amalia', '646-818-6563', '46바6424', '승용차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-08-17', '2025-06-28', 917533, 'Zane', '638-973-4018', '44자1035', '승용차');
-insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-01-05', '2025-03-30', 448882, 'Augie', '457-456-4595', '16파3596', '승용차');
+insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-01-05', '2025-03-30', 448882, 'Augie', '457-456-4595', '55사7000', '승용차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-02-09', '2024-06-29', 855729, 'Elvis', '717-474-9886', '20사4881', '승용차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-11-06', '2024-07-14', 925961, 'Rory', '324-469-5918', '28타8475', '승용차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-06-13', '2024-07-10', 931182, 'Dasha', '805-845-1841', '22나2866', '승용차');
@@ -1166,7 +1181,7 @@ insert into membership (membership_start, membership_end, charge, name, phone,ca
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-06-15', '2025-07-04', 630232, 'Lianna', '214-333-2290', '142하7498', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-05-10', '2024-11-26', 218865, 'Christean', '134-688-4995', '179하3896', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-09-29', '2025-01-03', 762733, 'Kylie', '427-927-1535', '164파7209', '경차');
-insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-07-23', '2025-06-14', 664735, 'Odille', '592-656-6404', '163자5653', '경차');
+insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-07-23', '2025-06-14', 664735, 'Odille', '592-656-6404', '170 자 1000', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-01-25', '2024-09-15', 628257, 'Andreana', '570-848-2215', '172가3979', '경차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2024-03-31', '2024-09-05', 176526, 'Xylia', '596-341-2766', '33가8968', '승용차');
 insert into membership (membership_start, membership_end, charge, name, phone,car_number, membership_type) values ('2023-09-22', '2024-11-18', 955124, 'Arleta', '850-614-4227', '07아9598', '경차');
